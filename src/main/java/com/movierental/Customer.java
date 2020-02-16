@@ -20,20 +20,7 @@ public class Customer {
     }
 
     public String statement() {
-        String result = "Rental Record for " + getName() + "\n";
-        double totalAmount = totalAmount();
-        int frequentRenterPoints = totalFrequentRenterPoints();
-
-        for (Rental rental : rentals) {
-            //show figures for this rental
-            result += "\t" + rental.getMovie().getTitle() + "\t" +
-                    String.valueOf(rental.amount()) + "\n";
-        }
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints)
-                + " frequent renter points";
-        return result;
-
+        return new TextStatement().display(this);
     }
 
     private int totalFrequentRenterPoints() {
@@ -52,6 +39,24 @@ public class Customer {
         result.append("Amount owed is <b>").append(totalAmount()).append("</b><br>");
         result.append("You earned <b>").append(totalFrequentRenterPoints()).append("</b> frequent renter points<br>");
         return result.toString();
+    }
+
+    private class TextStatement {
+        public String display(Customer customer) {
+            String result = "Rental Record for " + customer.getName() + "\n";
+            double totalAmount = customer.totalAmount();
+            int frequentRenterPoints = customer.totalFrequentRenterPoints();
+
+            for (Rental rental : customer.rentals) {
+                //show figures for this rental
+                result += "\t" + rental.getMovie().getTitle() + "\t" +
+                        String.valueOf(rental.amount()) + "\n";
+            }
+            result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
+            result += "You earned " + String.valueOf(frequentRenterPoints)
+                    + " frequent renter points";
+            return result;
+        }
     }
 }
 
