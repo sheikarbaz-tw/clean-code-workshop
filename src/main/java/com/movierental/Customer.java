@@ -20,13 +20,12 @@ public class Customer {
     }
 
     public String statement() {
-        int frequentRenterPoints = 0;
         String result = "Rental Record for " + getName() + "\n";
         double totalAmount = totalAmount();
 
-        for (Rental rental : rentals) {
-            frequentRenterPoints += rental.frequentRenterPoints();
+        int frequentRenterPoints = totalFrequentRenterPoints();
 
+        for (Rental rental : rentals) {
             //show figures for this rental
             result += "\t" + rental.getMovie().getTitle() + "\t" +
                     String.valueOf(rental.amount()) + "\n";
@@ -39,12 +38,12 @@ public class Customer {
         return result;
     }
 
+    private int totalFrequentRenterPoints() {
+        return rentals.stream().mapToInt(Rental::frequentRenterPoints).sum();
+    }
+
     private double totalAmount() {
-        double totalAmount = 0;
-        for (Rental rental : rentals) {
-            totalAmount += rental.amount();
-        }
-        return totalAmount;
+        return rentals.stream().mapToDouble(Rental::amount).sum();
     }
 
 }
