@@ -22,7 +22,6 @@ public class Customer {
     public String statement() {
         String result = "Rental Record for " + getName() + "\n";
         double totalAmount = totalAmount();
-
         int frequentRenterPoints = totalFrequentRenterPoints();
 
         for (Rental rental : rentals) {
@@ -30,12 +29,11 @@ public class Customer {
             result += "\t" + rental.getMovie().getTitle() + "\t" +
                     String.valueOf(rental.amount()) + "\n";
         }
-
-        //add footer lines result
         result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
         result += "You earned " + String.valueOf(frequentRenterPoints)
                 + " frequent renter points";
         return result;
+
     }
 
     private int totalFrequentRenterPoints() {
@@ -46,5 +44,14 @@ public class Customer {
         return rentals.stream().mapToDouble(Rental::amount).sum();
     }
 
+    public String htmlStatement() {
+        StringBuilder result = new StringBuilder("<h1>Rental Record for <b>" + name + "</b></h1><br>");
+        for (Rental rental : rentals) {
+            result.append(rental.getMovie().getTitle()).append(" ").append(rental.amount()).append("<br>");
+        }
+        result.append("Amount owed is <b>").append(totalAmount()).append("</b><br>");
+        result.append("You earned <b>").append(totalFrequentRenterPoints()).append("</b> frequent renter points<br>");
+        return result.toString();
+    }
 }
 
