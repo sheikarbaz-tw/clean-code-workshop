@@ -41,8 +41,12 @@ public class Rental {
 
   int frequentRenterPoints() {
       int frequentRenterPoints = 1;
-    if ((movie.getPriceCode() == Movie.NEW_RELEASE)
-              && getDaysRented() > 1) frequentRenterPoints++;
+    if (isEligibleForBonus()) frequentRenterPoints++;
       return frequentRenterPoints;
+  }
+
+  private boolean isEligibleForBonus() {
+    return (movie.getPriceCode() == Movie.NEW_RELEASE)
+              && getDaysRented() > 1;
   }
 }
