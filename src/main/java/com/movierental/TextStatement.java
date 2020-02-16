@@ -3,7 +3,7 @@ package com.movierental;
 import java.util.List;
 
 class TextStatement {
-    public String display(List<Rental> rentals, double totalAmount, int totalFrequentRenterPoints, String name) {
+    public String display(Rentals rentals, String name) {
         String result = "Rental Record for " + name + "\n";
 
         for (Rental rental : rentals) {
@@ -11,8 +11,8 @@ class TextStatement {
             result += "\t" + rental.getMovie().getTitle() + "\t" +
                     String.valueOf(rental.amount()) + "\n";
         }
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(totalFrequentRenterPoints)
+        result += "Amount owed is " + String.valueOf(rentals.totalAmount()) + "\n";
+        result += "You earned " + String.valueOf(rentals.totalFrequentRenterPoints())
                 + " frequent renter points";
         return result;
     }

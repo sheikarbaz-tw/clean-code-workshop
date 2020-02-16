@@ -1,11 +1,8 @@
 package com.movierental;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Customer {
     private String name;
-    private List<Rental> rentals = new ArrayList<>();
+    private Rentals rentals = new Rentals();
 
     public Customer(String name) {
         this.name = name;
@@ -20,15 +17,15 @@ public class Customer {
     }
 
     public String statement() {
-        return new TextStatement().display(this.rentals, this.totalAmount(), this.totalFrequentRenterPoints(), this.getName());
-    }
-
-    private int totalFrequentRenterPoints() {
-        return rentals.stream().mapToInt(Rental::frequentRenterPoints).sum();
+        return new TextStatement().display(this.rentals, this.getName());
     }
 
     private double totalAmount() {
         return rentals.stream().mapToDouble(Rental::amount).sum();
+    }
+
+    private int totalFrequentRenterPoints() {
+        return rentals.stream().mapToInt(Rental::frequentRenterPoints).sum();
     }
 
     public String htmlStatement() {
